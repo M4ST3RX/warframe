@@ -1,0 +1,266 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+// Custom elements
+@import 'forms';
+
+.bg-dark {
+    background-color: var(--dark);
+}
+
+.navbar {
+    padding: 0;
+}
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 700;
+    padding: 1rem 0.9rem;
+    text-decoration: none;
+}
+
+.navbar-dark .navbar-nav .nav-item {
+    color: white;
+
+    :hover {
+        color: white;
+        background-color: #0095ea;
+    }
+}
+
+.bg-black {
+    background-color: black;
+}
+
+body {
+    background-image: url("/storage/images/background.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    color: white;
+}
+
+.bg-resources {
+    background-color: #ff413c;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.5rem;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+.dropdown-item {
+    color: white;
+}
+
+.nav-tabs {
+    border-bottom: 1px #0095ea solid;
+
+    .nav-link {
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+    .nav-link.active {
+        color: white;
+        background-color: #0095ea;
+        border: none;
+    }
+
+    .nav-link:hover {
+        border: none;
+    }
+}
+
+.bg-red {
+    background-color: #ff413c;
+}
+
+.bg-green {
+    background-color: #64ab63;
+}
+
+.bg-blue {
+    background-color: #0095ea;
+}
+
+.col-xs-5ths,
+.col-sm-5ths,
+.col-md-5ths,
+.col-lg-5ths {
+    position: relative;
+    min-height: 1px;
+    padding: 0.4rem;
+}
+
+.col-xs-5ths {
+    width: 20%;
+    float: left;
+}
+
+@media (min-width: 768px) {
+    .col-sm-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 992px) {
+    .col-md-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+@media (min-width: 1200px) {
+    .col-lg-5ths {
+        width: 20%;
+        float: left;
+    }
+}
+
+.wf-item-card {
+    .card {
+        background-color: transparent;
+        border: none;
+
+        .card-body {
+            padding: 0.5rem;
+
+            .card-title {
+                margin: 0;
+            }
+        }
+    }
+
+    .mastered-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        color: white;
+        background-color: #0076ba;
+        border: none;
+    }
+
+    .mastered-btn:hover {
+        background-color: #0095ea;
+    }
+}
+
+.floating-btn {
+    position: absolute;
+    bottom: 2.5rem;
+    right: 2.5rem;
+    z-index: 999;
+    width: 48px;
+    height: 48px;
+}
+
+.inventory-add {
+    background-color: transparent;
+    border: none;
+}
+
+.inventory-add:focus {
+    background-color: transparent;
+    border: none;
+    box-shadow: none;
+    outline: none;
+}
+
+.modal-dark {
+    background-color: var(--dark);
+
+    .modal-header {
+        border-bottom: 1px #101010 solid;
+    }
+
+    .modal-footer {
+        border-top: 1px #101010 solid;
+    }
+}
+
+.close {
+    color: white;
+    text-shadow: 0 1px 0 #000;
+}
+
+.close:hover {
+    color: white;
+}
+
+::placeholder {
+    color: white;
+    opacity: 1;
+}
+
+.items-contents {
+    background-color: #383838;
+    position: absolute;
+    padding: 0.2rem 0.25rem;
+    overflow-y: scroll;
+    max-height: 254%;
+    min-width: 100%;
+    top: 5.1rem;
+    left: 0;
+
+    .list-group {
+        font-weight: bold;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+
+        .list-item {
+            font-weight: normal;
+            padding-left: 0.75rem;
+            padding-right: 0.75rem;
+            cursor: pointer;
+        }
+
+        .list-item:hover {
+            background-color: #0095ea;
+        }
+    }
+}
+
+.circle {
+    width: 150px;
+    height: 150px;
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    border: 4px #343434 solid;
+
+    img {
+        display: inline;
+        margin: 0 auto 0 -25%;
+        height: 100%;
+        width: auto;
+    }
+}
+
+.item-title {
+    font-size: 2rem;
+}

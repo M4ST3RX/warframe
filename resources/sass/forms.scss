@@ -1,0 +1,118 @@
+.wf-search-form {
+    display: inline-flex;
+    width: 100%;
+
+    input[type='text'] {
+        background-color: var(--dark);
+        padding: 0.8rem;
+        color: white;
+        border: 2px #383838 solid;
+        width: 100%;
+    }
+
+    input[type='text']:focus {
+        outline: none !important;
+        border: 2px #0095ea solid;
+    }
+
+    input[type='submit'] {
+        background-color: #0072ae;
+        transition: 0.3s;
+        color: white;
+        border: none;
+        padding: 0.75rem;
+        font-size: 1.1rem;
+    }
+
+    input[type='submit']:hover {
+        background-color: #0095ea;
+    }
+
+    input[type='submit']:focus {
+        outline: none !important;
+    }
+}
+
+.wf-search-list {
+    z-index: 50;
+    top: 3.3rem;
+    left: 2px;
+    right: 2px;
+    background-color: var(--dark);
+    max-height: 13.45rem;
+    overflow-y: scroll;
+
+    ul {
+        padding: 0;
+        list-style-type: none;
+        margin: 0 2px;
+
+        li {
+            padding: 0.4rem 0.7rem;
+        }
+
+        li:hover {
+            background-color: #0095ea;
+        }
+    }
+}
+
+.wf-form {
+    input[type='text'], input[type='password'], input[type='email'] {
+        background-color: #171717;
+        padding: 0.8rem;
+        color: white;
+        border: 2px #383838 solid;
+        width: 100%;
+    }
+
+    input[type='text']:focus, input[type='password']:focus, input[type='email']:focus {
+        outline: none !important;
+        border: 2px #0095ea solid;
+    }
+
+    input[type='checkbox'] {
+        background-color: #171717;
+        border: 2px #0095ea solid;;
+    }
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active
+{
+    -webkit-box-shadow: 0 0 0 30px #171717 inset !important;
+}
+
+input:-webkit-autofill
+{
+    -webkit-text-fill-color: white !important;
+}
+
+.invalid-feedback {
+    display: none;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 90%;
+    color: #e3342f;
+}
+
+.wf-input {
+    background-color: #171717;
+    padding: 0.8rem;
+    color: white;
+    border: 2px #383838 solid;
+    width: 100%;
+}
+
+.wf-input:focus {
+    outline: none !important;
+    border: 2px #0095ea solid;
+}
+
+.wf-label {
+    color: white;
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+}
