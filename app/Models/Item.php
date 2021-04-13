@@ -37,10 +37,16 @@ class Item extends Model
 
             $klass->url = $item->url;
             $klass->amount = $amount;
+            $klass->name = $item->name;
 
             $resources[] = $klass;
         }
 
-        return $resources;
+        $collection = collect($resources);
+        $collection->sortBy(function($resource) {
+            return $resource->name;
+        });
+
+        return $collection;
     }
 }
