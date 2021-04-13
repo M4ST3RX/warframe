@@ -66,12 +66,10 @@ export default {
         async getItems() {
             const { data } = await axios.get('/api/items?types=component,resource');
             this.items = _.orderBy(data, 'name');
-            console.log(data);
         },
         async getItems2() {
             const { data } = await axios.get('/api/items?types=component,warframe,primary,secondary,melee&group=1&orderBy=name');
             this.outputItems = _.chain(data).flatMap().orderBy('name').groupBy('type').value();
-            console.log(this.outputItems);
         },
         submitRecipe() {
             let form = new FormData();
@@ -86,11 +84,11 @@ export default {
             });
 
             axios.post('/api/recipe/create', form).then(function (response) {
-                /*if(response.data.error) {
+                if(response.data.error) {
                     alert(response.data.message);
                 }
 
-                location.reload();*/
+                location.reload();
             })
         }
     }
