@@ -25,9 +25,11 @@
                     <div class="mt-2 d-flex">
                         @if(count($resources) === 0)
                             <div class="mx-2">No recipe found</div>
-                            @if(auth()->user()->admin)
-                                <button class="btn btn-primary" data-toggle="modal" data-target="#addRecipeModal">Add Recipe</button>
-                            @endif
+                            @auth
+                                @if(auth()->user()->admin)
+                                    <button class="btn btn-primary" data-toggle="modal" data-target="#addRecipeModal">Add Recipe</button>
+                                @endif
+                            @endauth
                         @endif
                         @foreach($resources as $resource)
                             <div class="mx-2"><img height="32px" src="/storage/{{ $resource->url }}">{{ $resource->amount }}</div>
@@ -41,7 +43,9 @@
         </div>
     </div>
 
-    @if(auth()->user()->admin)
-        <add-recipe-modal :blueprint="{{ $item->id }}"></add-recipe-modal>
-    @endif
+    @auth
+        @if(auth()->user()->admin)
+            <add-recipe-modal :blueprint="{{ $item->id }}"></add-recipe-modal>
+        @endif
+    @endauth
 @endsection
