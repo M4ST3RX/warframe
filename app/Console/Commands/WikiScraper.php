@@ -50,6 +50,7 @@ class WikiScraper extends Command
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
 
             $client = new Client(['http_errors' => false]);
+            echo str_replace(' ', '/', $item->name) . "\n";
             $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
             $body = $response->getBody()->getContents();
 
@@ -123,6 +124,7 @@ class WikiScraper extends Command
                                         $title = str_replace(' ', '_', $title);
                                     }
 
+                                    echo $title . "\n";
                                     $resource = Item::where('key', $title)->first();
                                     $input_items[$resource->id] = intval(str_replace(',', '', trim($cell->nodeValue)));
                                 }
