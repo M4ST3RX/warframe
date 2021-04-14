@@ -40,13 +40,13 @@ class WarframeCraftingRecipes extends Command
      */
     public function handle()
     {
-        $items = Item::where('type', 'warframe')->get();
+        $items = Item::where('type', 'warframe')->limit(1)->get();
 
         foreach ($items as $item) {
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
 
             $client = new Client(['http_errors' => false]);
-            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
+            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/Trinity/Prime', ['verify' => false]);
             $body = $response->getBody()->getContents();
 
             @$doc = new \DOMDocument();
@@ -65,7 +65,6 @@ class WarframeCraftingRecipes extends Command
                 'chassis' => [],
                 'systems' => []
             ];
-
 
             foreach ($rows as $index => $row) {
                 if ($index === 1 || $index === 2) {
@@ -95,48 +94,46 @@ class WarframeCraftingRecipes extends Command
                 foreach ($rows as $row) {
                     $cells = $row->getElementsByTagName('td');
                     foreach($cells as $cell) {
-                        if (trim($cell->nodeValue) === "") continue;
-                        if ($cell->hasChildNodes()) {
-                            $child = $cell->firstChild;
-                            if($child instanceof \DOMText) {
-                                $parts = explode(' ', trim($cell->nodeValue));
+                        if (trim($cell->nodeValue) === "" && !$cell->hasChildNodes()) continue;
+                        $child = $cell->firstChild;
+                        if($child instanceof \DOMText) {
+                            $parts = explode(' ', trim($cell->nodeValue));
 
-                                if($parts[0] === 'Time:') {
-                                    $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
-                                } else {
-                                    $recipe->rush = $parts[2];
-                                }
+                            if($parts[0] === 'Time:') {
+                                $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
                             } else {
-                                if($child->hasAttribute('title')) {
-                                    $title = strtolower($cell->firstChild->getAttribute('title'));
-                                    $title = str_replace('warframe ', '', $title);
-                                    if($title === "neuroptics" || $title === "systems" || $title === "chassis") {
-                                        $title = $item->key . "_" . $title;
-                                    } else if($title === "credits") {
-                                        $recipe->price = intval(str_replace(',', '', trim($cell->nodeValue)));
-                                        continue;
-                                    } else {
-                                        $title = str_replace(' ', '_', $title);
-                                    }
-
-                                    $resource = Item::where('key', $title)->first();
-                                    if(trim($cell->nodeValue) === "") {
-                                        $amount = 1;
-                                    } else {
-                                        $amount = intval(str_replace(',', '', trim($cell->nodeValue)));
-                                    }
-                                    $input_items[$resource->id] = $amount;
+                                $recipe->rush = $parts[2];
+                            }
+                        } else {
+                            if($child->hasAttribute('title')) {
+                                $title = strtolower($cell->getElementsByTagName('a')[0]->getAttribute('title'));
+                                $title = str_replace('warframe ', '', $title);
+                                if($title === "neuroptics" || $title === "systems" || $title === "chassis") {
+                                    $title = $item->key . "_" . $title;
+                                } else if($title === "credits") {
+                                    $recipe->price = intval(str_replace(',', '', trim($cell->nodeValue)));
+                                    continue;
+                                } else {
+                                    $title = str_replace(' ', '_', $title);
                                 }
+
+                                $resource = Item::where('key', $title)->first();
+                                if(trim($cell->nodeValue) === "") {
+                                    $amount = 1;
+                                } else {
+                                    $amount = intval(str_replace(',', '', trim($cell->nodeValue)));
+                                }
+                                $input_items[$resource->id] = $amount;
                             }
                         }
                     }
                 }
 
                 $recipe->input_items = json_encode($input_items);
-                $recipe->save();
+                //$recipe->save();
 
                 $bp->crafting_id = $recipe->id;
-                $bp->save();
+                //$bp->save();
             }
         }
 
