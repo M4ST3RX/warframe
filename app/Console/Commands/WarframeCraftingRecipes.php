@@ -40,7 +40,7 @@ class WarframeCraftingRecipes extends Command
      */
     public function handle()
     {
-        $items = Item::where('type', 'warframe')->limit(1)->get();
+        $items = Item::where('type', 'warframe')->get();
 
         foreach ($items as $item) {
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
