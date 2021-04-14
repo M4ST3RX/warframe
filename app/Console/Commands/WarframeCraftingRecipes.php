@@ -94,11 +94,14 @@ class WarframeCraftingRecipes extends Command
                 foreach ($rows as $row) {
                     $cells = $row->getElementsByTagName('td');
                     foreach($cells as $cell) {
-                        if (trim($cell->nodeValue) === "" && !$cell->hasChildNodes()) continue;
                         $child = $cell->firstChild;
+                        if (trim($cell->nodeValue) === "" && ($child instanceof \DOMText && $child->length === 1)) continue;
+
                         if($child instanceof \DOMText) {
                             $parts = explode(' ', trim($cell->nodeValue));
 
+                            //print_r($cell);
+                            //echo $item->name . "\n";
                             if($parts[0] === 'Time:') {
                                 $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
                             } else {
