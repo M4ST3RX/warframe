@@ -9,6 +9,11 @@
       <sourceFolder url="file://$MODULE_DIR$/spec" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Unit" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/tests/Feature" isTestSource="true" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/3e" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/b8" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/c5" />
+      <excludeFolder url="file://$MODULE_DIR$/storage/framework/cache/data/ce" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/asm89/stack-cors" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/brick/math" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/composer" />
