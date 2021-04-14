@@ -44,10 +44,10 @@ class WikiScraper extends Command
      */
     public function handle()
     {
-        $items = Item::where('type', 'warframe')->whereNull('crafting_id')->get();
+        $items = Item::where('type', 'warframe')->get();
 
         foreach ($items as $item) {
-            if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox') continue;
+            if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
 
             $client = new Client(['http_errors' => false]);
             $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
@@ -113,6 +113,7 @@ class WikiScraper extends Command
                             } else {
                                 if($child->hasAttribute('title')) {
                                     $title = strtolower($cell->firstChild->getAttribute('title'));
+                                    $title = str_replace('warframe ', '', $title);
                                     if($title === "neuroptics" || $title === "systems" || $title === "chassis") {
                                         $title = $item->key . "_" . $title;
                                     } else if($title === "credits") {
