@@ -46,7 +46,7 @@ class WarframeCraftingRecipes extends Command
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
 
             $client = new Client(['http_errors' => false]);
-            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/Trinity/Prime', ['verify' => false]);
+            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
             $body = $response->getBody()->getContents();
 
             @$doc = new \DOMDocument();
@@ -130,10 +130,10 @@ class WarframeCraftingRecipes extends Command
                 }
 
                 $recipe->input_items = json_encode($input_items);
-                //$recipe->save();
+                $recipe->save();
 
                 $bp->crafting_id = $recipe->id;
-                //$bp->save();
+                $bp->save();
             }
         }
 
