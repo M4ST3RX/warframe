@@ -36,7 +36,7 @@ class Item extends Model
             $klass = new \stdClass();
 
             $klass->url = $item->url;
-            $klass->amount = $amount;
+            $klass->amount = number_format($amount);
             $klass->name = $item->name;
 
             $resources[] = $klass;
