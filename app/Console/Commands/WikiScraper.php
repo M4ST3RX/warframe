@@ -50,7 +50,7 @@ class WikiScraper extends Command
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox') continue;
 
             $client = new Client(['http_errors' => false]);
-            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/Nova', ['verify' => false]);
+            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
             $body = $response->getBody()->getContents();
 
             @$doc = new \DOMDocument();
