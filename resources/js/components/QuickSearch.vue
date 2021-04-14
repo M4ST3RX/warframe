@@ -29,7 +29,7 @@
         },
         methods: {
             async getItems() {
-                const { data } = await axios.get('/api/items?types=blueprint');
+                const { data } = await axios.get('/api/items?types=warframe,primary,secondary,melee,component');
                 this.items = data;
                 this.itemsSearched = data;
             },

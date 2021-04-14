@@ -5,7 +5,7 @@ namespace App\Console;
 use App\Console\Commands\CreateWarframeCrafting;
 use App\Console\Commands\InsertResources;
 use App\Console\Commands\WeaponScraper;
-use App\Console\Commands\WikiScraper;
+use App\Console\Commands\WarframeCraftingRecipes;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
         CreateWarframeCrafting::class,
         InsertResources::class,
         WeaponScraper::class,
-        WikiScraper::class
+        WarframeCraftingRecipes::class
     ];
 
     /**

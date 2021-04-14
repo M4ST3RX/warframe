@@ -2084,9 +2084,8 @@ var $ = window.jQuery;
                 _yield$axios$get = _context.sent;
                 data = _yield$axios$get.data;
                 _this.items = lodash__WEBPACK_IMPORTED_MODULE_2___default().orderBy(data, 'name');
-                console.log(data);
 
-              case 6:
+              case 5:
               case "end":
                 return _context.stop();
             }
@@ -2111,9 +2110,8 @@ var $ = window.jQuery;
                 _yield$axios$get2 = _context2.sent;
                 data = _yield$axios$get2.data;
                 _this2.outputItems = lodash__WEBPACK_IMPORTED_MODULE_2___default().chain(data).flatMap().orderBy('name').groupBy('type').value();
-                console.log(_this2.outputItems);
 
-              case 6:
+              case 5:
               case "end":
                 return _context2.stop();
             }
@@ -2131,10 +2129,11 @@ var $ = window.jQuery;
         form.append($(this).attr('name'), $(this).val());
       });
       axios__WEBPACK_IMPORTED_MODULE_1___default().post('/api/recipe/create', form).then(function (response) {
-        /*if(response.data.error) {
-            alert(response.data.message);
+        if (response.data.error) {
+          alert(response.data.message);
         }
-         location.reload();*/
+
+        location.reload();
       });
     }
   }
@@ -2309,7 +2308,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
             switch (_context.prev = _context.next) {
               case 0:
                 _context.next = 2;
-                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/items?types=blueprint');
+                return axios__WEBPACK_IMPORTED_MODULE_1___default().get('/api/items?types=warframe,primary,secondary,melee,component');
 
               case 2:
                 _yield$axios$get = _context.sent;

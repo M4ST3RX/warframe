@@ -6,10 +6,8 @@ use App\Models\Crafting;
 use App\Models\Item;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
-use PHPHtmlParser\Dom;
-use PHPHtmlParser\Options;
 
-class WikiScraper extends Command
+class WarframeCraftingRecipes extends Command
 {
     /**
      * The name and signature of the console command.
@@ -24,8 +22,6 @@ class WikiScraper extends Command
      * @var string
      */
     protected $description = 'Get all items from warframe wiki';
-
-    protected $exclude = ['Warframes', 'Abilities', 'Blueprints/Warframe', 'Sevagoth/Abilities'];
 
     /**
      * Create a new command instance.
@@ -85,9 +81,9 @@ class WikiScraper extends Command
 
             foreach($item_recipes as $key => $rows) {
                 if($key !== 'warframe') {
-                    $bp = Item::where('key', $item->key . "_" . $key . "_blueprint")->first();
+                    $bp = Item::where('key', $item->key . "_" . $key)->first();
                 } else {
-                    $bp = Item::where('key', $item->key . "_blueprint")->first();
+                    $bp = Item::where('key', $item->key)->first();
                 }
                 $recipe = new Crafting();
                 $recipe->blueprint = $bp->id;
@@ -124,7 +120,12 @@ class WikiScraper extends Command
                                     }
 
                                     $resource = Item::where('key', $title)->first();
-                                    $input_items[$resource->id] = intval(str_replace(',', '', trim($cell->nodeValue)));
+                                    if(trim($cell->nodeValue) === "") {
+                                        $amount = 1;
+                                    } else {
+                                        $amount = intval(str_replace(',', '', trim($cell->nodeValue)));
+                                    }
+                                    $input_items[$resource->id] = $amount;
                                 }
                             }
                         }

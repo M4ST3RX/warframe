@@ -49,4 +49,9 @@ class Item extends Model
 
         return $collection;
     }
+
+    public function getBlueprint()
+    {
+        return Item::where('key', $this->key . "_blueprint")->first();
+    }
 }
