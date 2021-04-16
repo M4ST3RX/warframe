@@ -9,7 +9,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing'];
+        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing', 'companion'];
         $items = Item::whereIn('type', $types)->orderBy('name')->get();
 
         $items = $items->groupBy(function($item) {
