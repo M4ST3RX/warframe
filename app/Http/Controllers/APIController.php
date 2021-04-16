@@ -73,6 +73,7 @@ class APIController extends Controller
 
     public function updateItem(Request $request, $id)
     {
+        if(!Auth::user()) redirect('login');
         $action = $request->get('action');
 
         switch ($action) {
