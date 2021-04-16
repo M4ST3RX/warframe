@@ -36,10 +36,10 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('index') }}">{{ __('Home') }}</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('items') }}">{{ __('Items') }}</a>
+                        </li>
                         @auth
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('items') }}">{{ __('Items') }}</a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('inventory') }}">{{ __('Inventory') }}</a>
                             </li>

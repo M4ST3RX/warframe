@@ -3,8 +3,6 @@
 </template>
 
 <script>
-    import axios from 'axios';
-    import _ from 'lodash';
     const $ = window.jQuery;
 
     export default {

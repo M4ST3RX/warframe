@@ -5,7 +5,7 @@
     <tabs>
         <tab name="Warframes" :selected="true">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["warframe"]) === 0)
                         No content
                     @endif
@@ -29,7 +29,7 @@
         </tab>
         <tab name="Primary">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["primary"]) === 0)
                         No content
                     @endif
@@ -53,7 +53,7 @@
         </tab>
         <tab name="Secondary">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["secondary"]) === 0)
                         No content
                     @endif
@@ -77,7 +77,7 @@
         </tab>
         <tab name="Melee">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["melee"]) === 0)
                         No content
                     @endif
@@ -101,7 +101,7 @@
         </tab>
         <tab name="Archwing">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["archwing"]) === 0)
                         No content
                     @endif
@@ -125,7 +125,7 @@
         </tab>
         <tab name="Companions">
             <div class="container">
-                <div class="row mt-2" style="padding: 0 10px;">
+                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["companion"]) === 0)
                         No content
                     @endif
