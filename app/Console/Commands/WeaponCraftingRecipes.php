@@ -7,14 +7,14 @@ use App\Models\Item;
 use GuzzleHttp\Client;
 use Illuminate\Console\Command;
 
-class WarframeCraftingRecipes extends Command
+class WeaponCraftingRecipes extends Command
 {
     /**
      * The name and signature of the console command.
      *
      * @var string
      */
-    protected $signature = 'wf:warframe_recipes';
+    protected $signature = 'wf:weapon_recipes';
 
     /**
      * The console command description.
@@ -40,7 +40,7 @@ class WarframeCraftingRecipes extends Command
      */
     public function handle()
     {
-        $items = Item::where('type', 'warframe')->get();
+        $items = Item::whereIn('type', ['primary', 'secondary', 'melee'])->get();
 
         foreach ($items as $item) {
             if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
@@ -84,7 +84,7 @@ class WarframeCraftingRecipes extends Command
                 } else {
                     $bp = Item::where('key', $item->key)->first();
                 }
-                $recipe = Crafting::findOrCreate('blueprint', $bp->id);
+                $recipe = new Crafting();
                 $recipe->blueprint = $bp->id;
                 $recipe->output_item = $item->id;
                 $recipe->amount = 1;
@@ -100,6 +100,8 @@ class WarframeCraftingRecipes extends Command
                         if($child instanceof \DOMText) {
                             $parts = explode(' ', trim($cell->nodeValue));
 
+                            //print_r($cell);
+                            //echo $item->name . "\n";
                             if($parts[0] === 'Time:') {
                                 $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
                             } else {

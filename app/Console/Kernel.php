@@ -4,7 +4,8 @@ namespace App\Console;
 
 use App\Console\Commands\CreateWarframeCrafting;
 use App\Console\Commands\InsertResources;
-use App\Console\Commands\WeaponScraper;
+use App\Console\Commands\WeaponCraftingRecipes;
+use App\Console\Commands\ItemScraper;
 use App\Console\Commands\WarframeCraftingRecipes;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -19,8 +20,9 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         CreateWarframeCrafting::class,
         InsertResources::class,
-        WeaponScraper::class,
-        WarframeCraftingRecipes::class
+        ItemScraper::class,
+        WarframeCraftingRecipes::class,
+        WeaponCraftingRecipes::class
     ];
 
     /**

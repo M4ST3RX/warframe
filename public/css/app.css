@@ -10135,6 +10135,10 @@ input:-webkit-autofill {
   background-color: black;
 }
 
+.bg-lightblue {
+  background-color: #3c78ff;
+}
+
 body {
   background-image: url("/storage/images/background.jpg");
   background-repeat: no-repeat;

@@ -54,4 +54,17 @@ class Item extends Model
     {
         return Item::where('key', $this->key . "_blueprint")->first();
     }
+
+    public function getColor()
+    {
+        if(Auth::user()) {
+            if($this->mastered()) {
+                return 'bg-green';
+            } else {
+                return 'bg-red';
+            }
+        }
+
+        return 'bg-lightblue';
+    }
 }

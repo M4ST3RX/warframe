@@ -48,155 +48,137 @@ class CreateWarframeCrafting extends Command
 
         foreach ($warframes as $warframe) {
             if($warframe->name === 'Equinox') {
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Night Neuroptics Blueprint";
-                $neuro->key = $warframe->key . "_night_neuroptics_blueprint";
-                $neuro->type = "blueprint";
-                $neuro->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_night_neuroptics_blueprint"], [
+                    'name' => $warframe->name . " Night Neuroptics Blueprint",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_chassis_blueprint"], [
+                    'name' => $warframe->name . " Night Chassis Blueprint",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_systems_blueprint"], [
+                    'name' => $warframe->name . " Night System Blueprint",
+                    'url' => 'images/components/systems.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_neuroptics_blueprint"], [
+                    'name' => $warframe->name . " Day Neuroptics Blueprint",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_chassis_blueprint"], [
+                    'name' => $warframe->name . " Day Chassis Blueprint",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_system_blueprint"], [
+                    'name' => $warframe->name . " Day System Blueprint",
+                    'url' => 'images/components/systems.png',
+                    'type' => "blueprint"
+                ]);
 
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Night Chassis Blueprint";
-                $chassis->key = $warframe->key . "_night_chassis_blueprint";
-                $chassis->type = "blueprint";
-                $chassis->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_day_aspect_blueprint"], [
+                    'name' => $warframe->name . " Day Aspect Blueprint",
+                    'url' => 'images/components/equinox_day_aspect.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_aspect_blueprint"], [
+                    'name' => $warframe->name . " Night Aspect Blueprint",
+                    'url' => 'images/components/equinox_night_aspect.png',
+                    'type' => "blueprint"
+                ]);
 
-                $sys = new Item();
-                $sys->name = $warframe->name . " Night System Blueprint";
-                $sys->key = $warframe->key . "_night_system_blueprint";
-                $sys->type = "blueprint";
-                $sys->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_night_neuroptics"], [
+                    'name' => $warframe->name . " Night Neuroptics",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_chassis"], [
+                    'name' => $warframe->name . " Night Chassis",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_systems"], [
+                    'name' => $warframe->name . " Night Systems",
+                    'url' => 'images/components/systems.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_neuroptics"], [
+                    'name' => $warframe->name . " Day Neuroptics",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_chassis"], [
+                    'name' => $warframe->name . " Day Chassis",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_day_systems"], [
+                    'name' => $warframe->name . " Day Systems",
+                    'url' => 'images/components/systems.png',
+                    'type' => "component"
+                ]);
 
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Day Neuroptics Blueprint";
-                $neuro->key = $warframe->key . "_day_neuroptics_blueprint";
-                $neuro->type = "blueprint";
-                $neuro->save();
-
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Day Chassis Blueprint";
-                $chassis->key = $warframe->key . "_day_chassis_blueprint";
-                $chassis->type = "blueprint";
-                $chassis->save();
-
-                $sys = new Item();
-                $sys->name = $warframe->name . " Day System Blueprint";
-                $sys->key = $warframe->key . "_day_system_blueprint";
-                $sys->type = "blueprint";
-                $sys->save();
-
-                $bp = new Item();
-                $bp->name = $warframe->name . " Day Aspect Blueprint";
-                $bp->key = $warframe->key . "_day_aspect_blueprint";
-                $bp->type = "blueprint";
-                $bp->save();
-
-                $bp = new Item();
-                $bp->name = $warframe->name . " Night Aspect Blueprint";
-                $bp->key = $warframe->key . "_night_aspect_blueprint";
-                $bp->type = "blueprint";
-                $bp->save();
-
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Night Neuroptics";
-                $neuro->key = $warframe->key . "_night_neuroptics";
-                $neuro->type = "blueprint";
-                $neuro->save();
-
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Night Chassis";
-                $chassis->key = $warframe->key . "_night_chassis";
-                $chassis->type = "blueprint";
-                $chassis->save();
-
-                $sys = new Item();
-                $sys->name = $warframe->name . " Night System";
-                $sys->key = $warframe->key . "_night_system";
-                $sys->type = "blueprint";
-                $sys->save();
-
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Day Neuroptics";
-                $neuro->key = $warframe->key . "_day_neuroptics";
-                $neuro->type = "blueprint";
-                $neuro->save();
-
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Day Chassis";
-                $chassis->key = $warframe->key . "_day_chassis";
-                $chassis->type = "blueprint";
-                $chassis->save();
-
-                $sys = new Item();
-                $sys->name = $warframe->name . " Day System";
-                $sys->key = $warframe->key . "_day_system";
-                $sys->type = "blueprint";
-                $sys->save();
-
-                $bp = new Item();
-                $bp->name = $warframe->name . " Day Aspect";
-                $bp->key = $warframe->key . "_day_aspect";
-                $bp->type = "blueprint";
-                $bp->save();
-
-                $bp = new Item();
-                $bp->name = $warframe->name . " Night Aspect";
-                $bp->key = $warframe->key . "_night_aspect";
-                $bp->type = "blueprint";
-                $bp->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_day_aspect"], [
+                    'name' => $warframe->name . " Day Aspect",
+                    'url' => 'images/components/equinox_day_aspect.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_night_aspect"], [
+                    'name' => $warframe->name . " Night Aspect",
+                    'url' => 'images/components/equinox_night_aspect.png',
+                    'type' => "component"
+                ]);
             } else {
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Neuroptics Blueprint";
-                $neuro->key = $warframe->key . "_neuroptics_blueprint";
-                $neuro->type = "blueprint";
-                $neuro->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_neuroptics_blueprint"], [
+                    'name' => $warframe->name . " Neuroptics Blueprint",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_chassis_blueprint"], [
+                    'name' => $warframe->name . " Chassis Blueprint",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "blueprint"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_systems_blueprint"], [
+                    'name' => $warframe->name . " Systems Blueprint",
+                    'url' => 'images/components/systems.png',
+                    'type' => "blueprint"
+                ]);
 
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Chassis Blueprint";
-                $chassis->key = $warframe->key . "_chassis_blueprint";
-                $chassis->type = "blueprint";
-                $chassis->save();
-
-                $sys = new Item();
-                $sys->name = $warframe->name . " System Blueprint";
-                $sys->key = $warframe->key . "_system_blueprint";
-                $sys->type = "blueprint";
-                $sys->save();
-
-                $neuro = new Item();
-                $neuro->name = $warframe->name . " Neuroptics";
-                $neuro->key = $warframe->key . "_neuroptics";
-                $neuro->type = "component";
-                $neuro->save();
-
-                $chassis = new Item();
-                $chassis->name = $warframe->name . " Chassis";
-                $chassis->key = $warframe->key . "_chassis";
-                $chassis->type = "component";
-                $chassis->save();
-
-                $sys = new Item();
-                $sys->name = $warframe->name . " System";
-                $sys->key = $warframe->key . "_system";
-                $sys->type = "component";
-                $sys->save();
+                Item::updateOrCreate(['key' => $warframe->key . "_systems"], [
+                    'name' => $warframe->name . " Neuroptics",
+                    'url' => 'images/components/neuroptics.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_systems"], [
+                    'name' => $warframe->name . " Chassis",
+                    'url' => 'images/components/chassis.png',
+                    'type' => "component"
+                ]);
+                Item::updateOrCreate(['key' => $warframe->key . "_systems"], [
+                    'name' => $warframe->name . " Systems",
+                    'url' => 'images/components/systems.png',
+                    'type' => "component"
+                ]);
             }
 
-            $item = new Item();
-            $item->name = $warframe->name . " Blueprint";
-            $item->key = $warframe->key . "_blueprint";
-            $item->url = $warframe->url;
-            $item->type = "blueprint";
-            $item->save();
+            Item::updateOrCreate(['key' => $warframe->key . "_blueprint"], [
+                'name' => $warframe->name . " Blueprint",
+                'type' => "blueprint",
+                'url' => $warframe->url
+            ]);
         }
 
         $weapons = Item::whereIn('type', ['primary', 'secondary', 'melee'])->get();
         foreach ($weapons as $weapon) {
-            $item = new Item();
-            $item->name = $weapon->name . " Blueprint";
-            $item->key = $weapon->key . "_blueprint";
-            $item->url = $weapon->url;
-            $item->type = "blueprint";
-            $item->save();
+            Item::updateOrCreate(['key' => $weapon->key], [
+                'name' => $weapon->name . " Blueprint",
+                'type' => "blueprint",
+                'url' => $weapon->url
+            ]);
         }
 
         return 0;

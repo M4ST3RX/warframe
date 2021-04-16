@@ -9,12 +9,12 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $items = [];
+        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing'];
+        $items = Item::whereIn('type', $types)->orderBy('name')->get();
 
-        $items['warframes'] = Item::where('type', 'warframe')->orderBy('name')->get();
-        $items['primary'] = Item::where('type', 'primary')->orderBy('name')->get();
-        $items['secondary'] = Item::where('type', 'secondary')->orderBy('name')->get();
-        $items['melee'] = Item::where('type', 'melee')->orderBy('name')->get();
+        $items = $items->groupBy(function($item) {
+            return $item['type'];
+        });
 
         return view('items')->with(['items' => $items]);
     }

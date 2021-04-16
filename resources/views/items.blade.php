@@ -6,17 +6,19 @@
         <tab name="Warframes" :selected="true">
             <div class="container">
                 <div class="row mt-2" style="padding: 0 10px;">
-                    @if(count($items["warframes"]) === 0)
+                    @if(count($items["warframe"]) === 0)
                         No content
                     @endif
-                    @foreach($items["warframes"] as $index => $item)
+                    @foreach($items["warframe"] as $index => $item)
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @auth
+                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @endauth
                                     <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body @if($item->mastered()) bg-green @else bg-red @endif">
+                                <div class="card-body {{ $item->getColor() }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -35,10 +37,12 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @auth
+                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @endauth
                                     <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body @if($item->mastered()) bg-green @else bg-red @endif">
+                                <div class="card-body {{ $item->getColor() }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -57,10 +61,12 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @auth
+                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @endauth
                                     <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body @if($item->mastered()) bg-green @else bg-red @endif">
+                                <div class="card-body {{ $item->getColor() }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -79,10 +85,36 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @auth
+                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @endauth
                                     <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body @if($item->mastered()) bg-green @else bg-red @endif">
+                                <div class="card-body {{ $item->getColor() }}">
+                                    <h5 class="card-title">{{ $item->name }}</h5>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        </tab>
+        <tab name="Archwing">
+            <div class="container">
+                <div class="row mt-2" style="padding: 0 10px;">
+                    @if(count($items["archwing"]) === 0)
+                        No content
+                    @endif
+                    @foreach($items["archwing"] as $index => $item)
+                        <div class="col-md-5ths wf-item-card">
+                            <div class="card bg-success">
+                                <div class="card-top">
+                                    @auth
+                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
+                                    @endauth
+                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                </div>
+                                <div class="card-body {{ $item->getColor() }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
