@@ -122,7 +122,6 @@ class ItemScraper extends Command
         $title = strtolower($title);
         $title = str_replace(' ', '_', $title);
         $title = str_replace('<archwing>_', '', $title);
-        echo $title;
         return $title;
     }
 
