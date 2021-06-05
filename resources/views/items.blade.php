@@ -15,7 +15,7 @@
                                 <div class="card-top">
                                     @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
@@ -37,9 +37,9 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
@@ -61,9 +61,9 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
@@ -85,9 +85,9 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
@@ -109,9 +109,9 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
@@ -133,9 +133,9 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endauth
+                                    @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor() }}">
