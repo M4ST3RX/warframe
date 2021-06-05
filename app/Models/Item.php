@@ -13,10 +13,14 @@ class Item extends Model
 
     protected $fillable = ['type', 'url', 'name', 'key', 'points'];
 
-    public function mastered()
+    public function mastered($userId = null)
     {
-        if(!Auth::user()) return false;
-        $item = DB::table('mastered')->where('user_id', Auth::user()->id)->where('item_id', $this->id)->first();
+        if(!$userId) {
+            if(!Auth::user()) return false;
+            $userId = Auth::id();
+        }
+
+        $item = DB::table('mastered')->where('user_id', $userId)->where('item_id', $this->id)->first();
 
         if($item) return true;
         return false;
@@ -55,10 +59,10 @@ class Item extends Model
         return Item::where('key', $this->key . "_blueprint")->first();
     }
 
-    public function getColor()
+    public function getColor($userId = null)
     {
-        if(Auth::user()) {
-            if($this->mastered()) {
+        if(Auth::user() || $userId) {
+            if($this->mastered($userId)) {
                 return 'bg-green';
             } else {
                 return 'bg-red';

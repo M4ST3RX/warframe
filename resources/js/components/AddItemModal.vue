@@ -49,7 +49,7 @@
         },
         methods: {
             async getItems() {
-                const { data } = await axios.get('/api/items?group=1');
+                const { data } = await axios.get('/api/items?types=warframe,primary,secondary,melee&group=1');
                 this.items = data;
                 this.itemsSearched = data;
             },

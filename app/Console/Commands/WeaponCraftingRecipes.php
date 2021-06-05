@@ -100,8 +100,6 @@ class WeaponCraftingRecipes extends Command
                         if($child instanceof \DOMText) {
                             $parts = explode(' ', trim($cell->nodeValue));
 
-                            //print_r($cell);
-                            //echo $item->name . "\n";
                             if($parts[0] === 'Time:') {
                                 $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
                             } else {

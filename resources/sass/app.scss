@@ -44,9 +44,7 @@
 }
 
 body {
-    background-image: url("/storage/images/background.jpg");
-    background-repeat: no-repeat;
-    background-attachment: fixed;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/storage/images/background.jpg") no-repeat fixed;
     background-size: cover;
     color: white;
 }
@@ -193,6 +191,41 @@ body {
     border: none;
     box-shadow: none;
     outline: none;
+}
+
+.username {
+    font-size: 1.6rem;
+}
+
+.rank {
+    position: absolute;
+    bottom: 0;
+    padding-right: 1rem;
+    width: 100%;
+}
+
+.wf-inventory-container {
+    padding: 5px 0;
+    margin: 5px 0;
+}
+
+.wf-inventory-parts {
+    padding: 0 5px;
+
+    .card {
+        background-color: black;
+        justify-content: center;
+    }
+}
+
+.wf-inventory-item {
+    margin-left: 8%;
+    padding-right: 5px;
+
+    .card {
+        background-color: black;
+        justify-content: center;
+    }
 }
 
 .modal-dark {

@@ -84,7 +84,7 @@ class WarframeCraftingRecipes extends Command
                 } else {
                     $bp = Item::where('key', $item->key)->first();
                 }
-                $recipe = Crafting::findOrCreate('blueprint', $bp->id);
+                $recipe = Crafting::firstOrCreate('blueprint', $bp->id);
                 $recipe->blueprint = $bp->id;
                 $recipe->output_item = $item->id;
                 $recipe->amount = 1;

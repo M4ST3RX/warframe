@@ -35,7 +35,20 @@ class APIController extends Controller
         $items = [];
 
         foreach ($inventory as $key => $item) {
-            $items[] = Item::find($item->item_id);;
+            $craftingRecipe = Crafting::where('blueprint', $item->item_id)->first();
+            if(!$craftingRecipe) continue;
+
+            $input_items = json_decode($craftingRecipe->input_items);
+            $itemList = [];
+
+            foreach ($input_items as $itemId => $amount) {
+                $itemList[] = Item::find($itemId);
+            }
+
+            $items[$item->item_id] = [
+                'parts' => $itemList,
+                'item' => Item::find($item->item_id)
+            ];
         }
 
         return json_encode($items);
@@ -73,7 +86,7 @@ class APIController extends Controller
 
     public function updateItem(Request $request, $id)
     {
-        if(!Auth::user()) redirect('login');
+        if(!Auth::check()) redirect('login');
         $action = $request->get('action');
 
         switch ($action) {
@@ -110,6 +123,8 @@ class APIController extends Controller
 
     public function addItemInventory(Request $request)
     {
+        if(!Auth::check()) return redirect('login');
+
         $itemId = $request->get('item_id');
         $amount = $request->get('amount');
 

@@ -1,12 +1,16 @@
 <template>
     <div class="container">
-        <div class="row mt-2" style="padding: 0 10px;">
+        <div class="row mt-2 bg-dark" style="padding: 0 10px;">
             <div v-if="items.length === 0">No content</div>
-            <div class="col-md-5ths wf-item-card" v-for="item in items">
-                <div class="card bg-success">
-                    <img class="card-img-top" :src="'storage/'+item.url" :alt="item.name" />
-                    <div class="card-body bg-blue">
-                        <h5 class="card-title">{{ item.name }}</h5>
+            <div class="wf-inventory-container d-flex bg-blue" v-for="item in items">
+                <div class="wf-item-card wf-inventory-parts" v-for="part in item.parts">
+                    <div class="card h-100">
+                        <img class="card-img-top" :src="'storage/'+part.url" :alt="part.name" />
+                    </div>
+                </div>
+                <div class="wf-item-card wf-inventory-item">
+                    <div class="card h-100">
+                        <img class="card-img-top" :src="'storage/'+item.item.url" :alt="item.item.name" />
                     </div>
                 </div>
             </div>

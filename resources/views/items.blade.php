@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <tabs>
-        <tab name="Warframes" :selected="true">
+        <tab name="Warframe" :selected="true">
             <div class="container">
                 <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["warframe"]) === 0)
@@ -13,12 +13,12 @@
                         <div class="col-md-5ths wf-item-card">
                             <div class="card bg-success">
                                 <div class="card-top">
-                                    @auth
+                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -40,9 +40,9 @@
                                     @auth
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -64,9 +64,9 @@
                                     @auth
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -88,9 +88,9 @@
                                     @auth
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -112,9 +112,9 @@
                                     @auth
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
@@ -123,7 +123,7 @@
                 </div>
             </div>
         </tab>
-        <tab name="Companions">
+        <tab name="Companion">
             <div class="container">
                 <div class="row mt-2" style="padding: 0 10px 10px 10px;">
                     @if(count($items["companion"]) === 0)
@@ -136,7 +136,7 @@
                                     @auth
                                         <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
                                     @endauth
-                                    <img class="card-img-top" src="storage/{{ $item->url }}" alt="{{ $item->name }}" />
+                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
                                 <div class="card-body {{ $item->getColor() }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
