@@ -138,7 +138,7 @@
                                     @endif
                                     <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
                                 </div>
-                                <div class="card-body {{ $item->getColor() }}">
+                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
                                     <h5 class="card-title">{{ $item->name }}</h5>
                                 </div>
                             </div>
