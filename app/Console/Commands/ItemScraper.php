@@ -136,7 +136,7 @@ class ItemScraper extends Command
         $src = imagecreatefromwebp($url);
         $dest = imagecreatetruecolor($resolution[0], $resolution[1]);
 
-        imagecopy($dest, $src, 0, 0, 0, 0, $resolution[0], $resolution[1]);
+        imagecopyresized($dest, $src, 0, 0, 0, 0, 512, 341, $resolution[0], $resolution[1]);
 
         imagepng($dest, storage_path('app/public') . '/' . $path);
 
