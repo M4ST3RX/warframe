@@ -26,6 +26,19 @@ class APIController extends Controller
             })->all();
         }
 
+        if($request->has('mastery') && $request->get('mastery')) {
+            foreach($items as $item) {
+                $item->isMastered = $item->mastered(Auth::id());
+                $item->color = $item->getColor(Auth::id());
+            }
+        }
+
+        if($request->has('crafting') && $request->get('crafting')) {
+            foreach($items as $item) {
+                $item->recipe = $item->getCraftingRecipe();
+            }
+        }
+
         return json_encode($items);
     }
 
@@ -118,7 +131,7 @@ class APIController extends Controller
             $mastered = true;
         }
 
-        return ['error' => false, 'data' => ['mastered' => $mastered]];
+        return ['error' => false, 'data' => ['mastered' => $mastered, 'color' => $item->getColor(Auth::id())]];
     }
 
     public function addItemInventory(Request $request)

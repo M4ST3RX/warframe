@@ -1,152 +1,21 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <tabs>
-        <tab name="Warframe" :selected="true">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["warframe"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["warframe"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-        <tab name="Primary">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["primary"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["primary"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-        <tab name="Secondary">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["secondary"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["secondary"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-        <tab name="Melee">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["melee"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["melee"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-        <tab name="Archwing">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["archwing"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["archwing"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-        <tab name="Companion">
-            <div class="container">
-                <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                    @if(count($items["companion"]) === 0)
-                        No content
-                    @endif
-                    @foreach($items["companion"] as $index => $item)
-                        <div class="col-md-5ths wf-item-card">
-                            <div class="card bg-success">
-                                <div class="card-top">
-                                    @if(\Illuminate\Support\Facades\Auth::check() && !isset($userId))
-                                        <button data-id="{{ $item->id }}" class="mastered-btn d-none">Mastered</button>
-                                    @endif
-                                    <img class="card-img-top" src="{{ asset('storage/' . $item->url) }}" alt="{{ $item->name }}" />
-                                </div>
-                                <div class="card-body {{ $item->getColor(isset($userId) ? $userId : null) }}">
-                                    <h5 class="card-title">{{ $item->name }}</h5>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-        </tab>
-    </tabs>
+<div class="main-container">
+    <div class="row">
+        <div class="col-md-2">
+            <item-filter></item-filter>
+        </div>
+        <div class="col-md-10">
+            <tabs>
+                <tab name="Warframe" :selected="true" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Primary" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Secondary" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Melee" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Archwing" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Companion" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+            </tabs>
+        </div>
+    </div>
 </div>
 @endsection

@@ -71,4 +71,23 @@ class Item extends Model
 
         return 'bg-lightblue';
     }
+
+    public function getCraftingRecipe()
+    {
+        $crafting = Crafting::find($this->crafting_id);
+
+        if($crafting) {
+            $recipe = [];
+            $recipeItems = json_decode($crafting->input_items);
+            foreach ($recipeItems as $item => $amount) {
+                $recipeItem = Item::select('key', 'name', 'id')->where('id', $item)->first();
+                $recipeItem->amount = $amount;
+                $recipe[$recipeItem->key] = $recipeItem;
+            }
+
+            return $recipe;
+        }
+
+        return null;
+    }
 }

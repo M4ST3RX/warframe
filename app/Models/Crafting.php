@@ -8,4 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Crafting extends Model
 {
     use HasFactory;
+
+    protected $fillable = ['blueprint', 'input_items', 'output_item', 'amount', 'rush', 'time', 'price'];
 }

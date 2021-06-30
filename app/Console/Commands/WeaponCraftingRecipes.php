@@ -9,6 +9,11 @@ use Illuminate\Console\Command;
 
 class WeaponCraftingRecipes extends Command
 {
+    protected $itemParts = ['blade', 'hilt', 'link', 'stock', 'barrel', 'receiver', 'gauntlet', 'handle', 'chassis', 'heatsink', 'grip',
+        'string', 'upper_limb', 'lower_limb', 'left_gauntlet', 'right_gauntlet', 'guard', 'rivet', 'ornament', 'head', 'disc', 'stars',
+        'pouch', 'boot', 'chain', 'subcortex', 'blades', 'motor', 'core'];
+    protected $recipes = [];
+
     /**
      * The name and signature of the console command.
      *
@@ -40,105 +45,163 @@ class WeaponCraftingRecipes extends Command
      */
     public function handle()
     {
-        $items = Item::whereIn('type', ['primary', 'secondary', 'melee'])->get();
+
+        $items = Item::whereIn('type', ['primary', 'secondary', 'melee'])->orderBy('name', 'ASC')->get();
 
         foreach ($items as $item) {
-            if($item->key === 'voidrig' || $item->key === 'bonewidow' || $item->key === 'equinox' || $item->key === 'excalibur_prime') continue;
-
+            $this->info($item->name);
             $client = new Client(['http_errors' => false]);
-            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '/', $item->name), ['verify' => false]);
+            $response = $client->request('GET', 'https://warframe.fandom.com/wiki/' . str_replace(' ', '_', $item->name), ['verify' => false]);
             $body = $response->getBody()->getContents();
-
             @$doc = new \DOMDocument();
             @$doc->loadHTML($body);
-
             $xpath = new \DOMXPath($doc);
-
-            $table = $xpath->query("//table[@class='foundrytable']")->item(0);
-
+            $foundryTableList = $xpath->query("//table[@class='foundrytable']");
+            if($foundryTableList->length === 0) {
+                $this->error('Missing foundry table for ' . $item->name);
+                continue;
+            }
+            $table = $foundryTableList->item(0);
             $rows = $table->getElementsByTagName("tr");
 
+            $ignoreAnythingAfter = false;
 
-            $item_recipes = [
-                'warframe' => [],
-                'neuroptics' => [],
-                'chassis' => [],
-                'systems' => []
-            ];
+            foreach ($rows as $index => $row)
+            {
+                if($ignoreAnythingAfter) continue;
 
-            foreach ($rows as $index => $row) {
-                if ($index === 1 || $index === 2) {
-                    array_push($item_recipes['warframe'], $row);
-                } else if ($index === 5 || $index === 6) {
-                    array_push($item_recipes['neuroptics'], $row);
-                } else if ($index === 8 || $index === 9) {
-                    array_push($item_recipes['chassis'], $row);
-                } else if ($index === 11 || $index === 12) {
-                    array_push($item_recipes['systems'], $row);
-                }
-            }
-
-            foreach($item_recipes as $key => $rows) {
-                if($key !== 'warframe') {
-                    $bp = Item::where('key', $item->key . "_" . $key)->first();
-                } else {
-                    $bp = Item::where('key', $item->key)->first();
-                }
-                $recipe = new Crafting();
-                $recipe->blueprint = $bp->id;
-                $recipe->output_item = $item->id;
-                $recipe->amount = 1;
-
-                $input_items = [];
-
-                foreach ($rows as $row) {
-                    $cells = $row->getElementsByTagName('td');
-                    foreach($cells as $cell) {
-                        $child = $cell->firstChild;
-                        if (trim($cell->nodeValue) === "" && ($child instanceof \DOMText && $child->length === 1)) continue;
-
-                        if($child instanceof \DOMText) {
-                            $parts = explode(' ', trim($cell->nodeValue));
-
-                            if($parts[0] === 'Time:') {
-                                $recipe->time = $this->getTimeInSec($parts[1], $parts[2]);
-                            } else {
-                                $recipe->rush = $parts[2];
-                            }
+                switch ($index) {
+                    case 1:
+                        $this->addItemToRecipesArray($item, $row);
+                        break;
+                    case 2:
+                        $this->addRushTimeToMainItem($item, $row);
+                        break;
+                    case 7:
+                    case 10:
+                    case 13:
+                    case 4:
+                        if(strpos($row->nodeValue, '•') !== false) {
+                            $value = preg_replace('/\n/', '', $row->nodeValue);
+                            $this->addItemPartsToRecipesArray($item, explode(' ', $value)[0], $rows[$index+1], $rows[$index+2]);
                         } else {
-                            if($child->hasAttribute('title')) {
-                                $title = strtolower($cell->getElementsByTagName('a')[0]->getAttribute('title'));
-                                $title = str_replace('warframe ', '', $title);
-                                if($title === "neuroptics" || $title === "systems" || $title === "chassis") {
-                                    $title = $item->key . "_" . $title;
-                                } else if($title === "credits") {
-                                    $recipe->price = intval(str_replace(',', '', trim($cell->nodeValue)));
-                                    continue;
-                                } else {
-                                    $title = str_replace(' ', '_', $title);
-                                }
-
-                                $resource = Item::where('key', $title)->first();
-                                if(trim($cell->nodeValue) === "") {
-                                    $amount = 1;
-                                } else {
-                                    $amount = intval(str_replace(',', '', trim($cell->nodeValue)));
-                                }
-                                $input_items[$resource->id] = $amount;
-                            }
+                            $ignoreAnythingAfter = true;
                         }
-                    }
+                        break;
+
+                    default:
+                        break;
                 }
-
-                $recipe->input_items = json_encode($input_items);
-                $recipe->save();
-
-                $bp->crafting_id = $recipe->id;
-                $bp->save();
             }
+
+            foreach ($this->recipes as $key => $recipe) {
+                $crafting = Crafting::firstOrCreate(['output_item' => $key], [
+                    'blueprint' => $key,
+                    'input_items' => json_encode($recipe['recipe']),
+                    'output_item' => $key,
+                    'amount' => 1,
+                    'price' => $recipe['price'],
+                    'time' => $recipe['time'],
+                    'rush' => $recipe['rush']
+                ]);
+
+                $i = Item::where('id', $item->id)->first();
+                $i->crafting_id = $crafting->id;
+                $i->save();
+            }
+
+            $this->recipes = [];
         }
 
         return 0;
+    }
+
+    public function addItemToRecipesArray($item, $row)
+    {
+        $cells = $row->getElementsByTagName('td');
+        foreach ($cells as $cell) {
+            $child = $cell->firstChild;
+            if (trim($cell->nodeValue) === "" && ($child instanceof \DOMText && $child->length === 1)) continue;
+
+            if($child instanceof \DOMText) {
+                $parts = explode(' ', trim($cell->nodeValue));
+                $this->recipes[$item->id]['time'] = $this->getTimeInSec($parts[1], $parts[2]);
+            } else {
+                $titleAttr = str_replace(' ', '_', strtolower($child->getAttribute('title')));
+                $amount = (trim($cell->nodeValue) === "") ? 1 : intval(str_replace(',', '', trim($cell->nodeValue)));
+
+                if($titleAttr === 'credits') {
+                    $this->recipes[$item->id]['price'] = $amount;
+                    continue;
+                }
+
+                if(in_array($titleAttr, $this->itemParts)) {
+                    $titleAttr = $item->key . '_' . $titleAttr;
+                    $this->createItemPart($titleAttr);
+                }
+
+                $recipeItem = Item::where('key', $titleAttr)->first();
+                $recipeItemId = $recipeItem->id;
+
+                $this->recipes[$item->id]['recipe'][$recipeItemId] = $amount;
+                $this->recipes[$item->id]['blueprint'] = $item->id;
+                $this->recipes[$item->id]['output'] = $item->id;
+            }
+        }
+    }
+
+    public function addRushTimeToMainItem($item, $row)
+    {
+        if(trim($row->nodeValue) === 'N/A') {
+            $this->recipes[$item->id]['rush'] = 0;
+            return;
+        }
+        $parts = explode('  ', trim($row->nodeValue));
+        $this->recipes[$item->id]['rush'] = $parts[1];
+    }
+
+    public function addItemPartsToRecipesArray($item, $itemPartName, $row1, $row2)
+    {
+        $arrayIndex = $item->key . '_' . str_replace(' ', '_', strtolower($itemPartName));
+        $cells = $row1->getElementsByTagName('td');
+
+        $itemPart = Item::where('key', $arrayIndex)->first();
+
+        foreach ($cells as $cell) {
+            $child = $cell->firstChild;
+            if (trim($cell->nodeValue) === "" && ($child instanceof \DOMText && $child->length === 1)) continue;
+
+            if($child instanceof \DOMText) {
+                $parts = explode(' ', trim($cell->nodeValue));
+                $this->recipes[$itemPart->id]['time'] = $this->getTimeInSec($parts[1], $parts[2]);
+            } else {
+                $titleAttr = str_replace(' ', '_', strtolower($child->getAttribute('title')));
+                $amount = (trim($cell->nodeValue) === "") ? 1 : intval(str_replace(',', '', trim($cell->nodeValue)));
+
+                if($titleAttr === 'credits') {
+                    $this->recipes[$itemPart->id]['price'] = $amount;
+                    continue;
+                }
+
+                $recipeItem = Item::where('key', $titleAttr)->first();
+                $recipeItemId = $recipeItem->id;
+
+                $this->recipes[$itemPart->id]['recipe'][$recipeItemId] = $amount;
+                $this->recipes[$itemPart->id]['blueprint'] = $itemPart->id;
+                $this->recipes[$itemPart->id]['output'] = $itemPart->id;
+            }
+        }
+
+        $parts = explode('  ', trim($row2->nodeValue));
+        $this->recipes[$itemPart->id]['rush'] = $parts[1];
+    }
+
+    public function createItemPart($itemKey)
+    {
+        Item::firstOrCreate(['key' => $itemKey], [
+            'type' => 'weapon_part',
+            'name' => ucwords(str_replace('_', ' ', $itemKey))
+        ]);
     }
 
     public function getTimeInSec($time, $name)

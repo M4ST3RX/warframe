@@ -34,6 +34,8 @@ Vue.component('tab', require('./components/tab.vue').default);
 Vue.component('add-item-modal', require('./components/AddItemModal.vue').default);
 Vue.component('add-recipe-modal', require('./components/AddRecipeModal.vue').default);
 Vue.component('wf-inventory', require('./components/Inventory.vue').default);
+Vue.component('item-filter', require('./components/ItemFilter.vue').default);
+Vue.component('tab-item', require('./components/TabItem.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
@@ -43,10 +45,16 @@ Vue.component('wf-inventory', require('./components/Inventory.vue').default);
 
 const app = new Vue({
     el: '#app',
+
+    methods: {
+        refreshFilteredItems() {
+
+        }
+    }
 });
 
 $(function() {
-    $(".card-top").on('mouseenter', function() {
+    /*$(".card-top").on('mouseenter', function() {
         $(this).children('.mastered-btn').removeClass('d-none');
         $(this).children('.mastered-btn').addClass('d-block');
     }).on('mouseleave', function() {
@@ -72,6 +80,6 @@ $(function() {
             }
         })
 
-    });
+    });*/
 });
 
