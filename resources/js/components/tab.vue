@@ -2,7 +2,7 @@
     <div v-show="isActive">
         <div class="main-container">
             <div class="row mt-2" style="padding: 0 10px 10px 10px;">
-                <div class="col-md-5ths wf-item-card" v-if="items.length > 0" v-for="item in items" v-show="!item.hidden">
+                <div class="col-sm-5ths col-md-5ths col-lg-5ths wf-item-card" v-if="items.length > 0" v-for="item in items" v-show="!item.hidden">
                     <tab-item :item="item" :isLoggedIn="isLoggedIn" @updateMastered="updateMastered"></tab-item>
                 </div>
                 <div v-else>No content</div>

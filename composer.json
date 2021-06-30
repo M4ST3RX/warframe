@@ -13,7 +13,8 @@
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
       "ext-json": "*",
-      "ext-dom": "*"
+      "ext-dom": "*",
+      "ext-gd": "*"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

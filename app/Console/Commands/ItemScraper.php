@@ -129,7 +129,7 @@ class ItemScraper extends Command
 
     private function processImage($key, $imageURL, $type) {
 
-        $path = "images/" . $type . "/" . $key . ".png";
+        $path = "images/" . $type . "/" . $key . ".webp";
         $url = 'https://media.overframe.gg/512x' . $imageURL . '.webp';
 
         $resolution = getimagesize($url);
@@ -138,7 +138,7 @@ class ItemScraper extends Command
 
         imagecopyresized($dest, $src, 0, 0, 0, 0, 512, 341, $resolution[0], $resolution[1]);
 
-        imagepng($dest, storage_path('app/public') . '/' . $path);
+        imagewebp($dest, storage_path('app/public') . '/' . $path, 80);
 
         return $path;
     }
