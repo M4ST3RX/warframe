@@ -68,7 +68,7 @@ class InsertResources extends Command
                 'name' => $item,
                 'key' => strtolower(str_replace(' ', '_', $item)),
                 'type' => 'resource',
-                'url' => "images/resources/".strtolower(str_replace(' ', '_', $item)).".png"
+                'url' => "images/resources/".strtolower(str_replace(' ', '_', $item)).".webp"
             ]);
         }
 
