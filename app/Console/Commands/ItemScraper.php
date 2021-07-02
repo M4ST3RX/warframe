@@ -94,9 +94,9 @@ class ItemScraper extends Command
             } else if($json->tag === 'Weapon' && $json->category === 'SpaceSuits') {
                 Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
                     'name' => $this->getItemName($json->name),
-                    'type' => "archwing",
+                    'type' => "archgun",
                     'points' => 3000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'archwings')
+                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'archguns')
                 ]);
             } else if($json->tag === 'Sentinel' && $json->category === 'Sentinels') {
                 Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
@@ -143,7 +143,7 @@ class ItemScraper extends Command
 
         $resolution = getimagesize($url);
         $src = imagecreatefromwebp($url);
-        $dest = imagecreatetruecolor($resolution[0], $resolution[1]);
+        $dest = imagecreatetruecolor(512, 341);
 
         imagecopyresized($dest, $src, 0, 0, 0, 0, 512, 341, $resolution[0], $resolution[1]);
 
