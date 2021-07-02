@@ -44,7 +44,7 @@ class ItemScraper extends Command
      */
     public function handle()
     {
-        for($i = 1; $i < 6000; $i++) {
+        for($i = 1; $i <= 6000; $i++) {
             $client = new Client(['http_errors' => false]);
             $response = $client->request('GET', 'https://overframe.gg/api/v1/items/' . $i, ['verify' => false]);
             $body = $response->getBody();
@@ -55,18 +55,20 @@ class ItemScraper extends Command
                 continue;
             }
             if($json->tag === 'Warframe' && $json->category === 'Suits') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
+                $key = $this->getItemKey($json->name);
+                $type = ($key == 'voidrig' || $key == 'bonewidow') ? 'vehicle' : 'warframe';
+                Item::updateOrCreate(['key' => $key], [
                     'name' => $this->getItemName($json->name),
-                    'type' => "warframe",
+                    'type' => $type,
                     'points' => 6000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'warframes')
+                    'url' => $this->processImage($key, $json->texture, 'warframes')
                 ]);
             } else if($json->tag === 'Warframe' && $json->category === 'SpaceSuits') {
                 Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
                     'name' => $this->getItemName($json->name),
-                    'type' => "archwing",
+                    'type' => "vehicle",
                     'points' => 6000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'archwings')
+                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'vehicles')
                 ]);
             } else if($json->tag === 'Weapon' && $json->category === 'LongGuns') {
                 Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
@@ -97,6 +99,13 @@ class ItemScraper extends Command
                     'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'archwings')
                 ]);
             } else if($json->tag === 'Sentinel' && $json->category === 'Sentinels') {
+                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
+                    'name' => $this->getItemName($json->name),
+                    'type' => "companion",
+                    'points' => 6000,
+                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'companions')
+                ]);
+            } else if($json->tag === 'Weapon' && $json->category === 'Sentinels') {
                 Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
                     'name' => $this->getItemName($json->name),
                     'type' => "companion",

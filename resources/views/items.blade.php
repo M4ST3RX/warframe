@@ -12,7 +12,8 @@
                 <tab name="Primary" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
                 <tab name="Secondary" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
                 <tab name="Melee" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
-                <tab name="Archwing" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Vehicle" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Archgun" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
                 <tab name="Companion" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
             </tabs>
         </div>

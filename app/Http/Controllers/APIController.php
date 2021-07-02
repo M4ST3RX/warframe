@@ -13,6 +13,7 @@ class APIController extends Controller
 {
     public function getItems(Request $request)
     {
+
         if($request->has('types')) {
             $types = explode(',', $request->get('types'));
             $items = Item::whereIn('type', $types)->get();
