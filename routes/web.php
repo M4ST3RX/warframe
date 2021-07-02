@@ -25,7 +25,6 @@ Auth::routes();
 // Auth only
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/inventory', [InventoryController::class, 'index'])->name('inventory');
-
 });
 
 // Guest
