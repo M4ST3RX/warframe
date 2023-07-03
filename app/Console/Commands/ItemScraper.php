@@ -44,77 +44,101 @@ class ItemScraper extends Command
      */
     public function handle()
     {
-        for($i = 1; $i <= 6000; $i++) {
-            $client = new Client(['http_errors' => false]);
-            $response = $client->request('GET', 'https://overframe.gg/api/v1/items/' . $i, ['verify' => false]);
-            $body = $response->getBody();
-            $json = json_decode($body);
+        $client = new Client(['http_errors' => false]);
+        $response = $client->request('GET', 'https://api.warframestat.us/items?remove=abilities,patchlogs' , ['verify' => false]);
+        
+        $body = $response->getBody();
+        $json = json_decode($body);
 
-            if($response->getStatusCode() === 404) {
-                $this->warn('Item #' . $i . ' missing.');
-                continue;
+        foreach($json as $item) {
+            
+            $this->warn('Item ' . $item->name . ' processing...');
+            if ($item->category === "Warframes" || $item->category === "Primary" || $item->category === "Secondary" || $item->category === "Melee" || $item->category === "Sentinels" || $item->category === "Arch-Gun" ){
+                if($item->type === 'Warframe' && $item->productCategory === 'Suits') {
+                    $key = $this->getItemKey($item->name);
+                    Item::updateOrCreate(['key' => $key], [
+                        'name' => $item->name,
+                        'type' => "warframe",
+                        'points' => 6000,
+                        'url' => $this->processImage($key, 'warframes')
+                    ]);
+                    
+                } else if($item->type === 'Warframe' && $item->productCategory === 'SpaceSuits') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "vehicle",
+                        'points' => 6000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'vehicles')
+                    ]);
+                    
+    
+                } else if($item->type === 'Warframe' && $item->productCategory === 'MechSuits') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "vehicle",
+                        'points' => 6000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'vehicles')
+                    ]);
+                   
+    
+                } else if($item->type === 'Rifle' && $item->productCategory === 'LongGuns') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "primary",
+                        'points' => 3000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'weapons')
+                    ]);
+                    
+    
+                } else if($item->type === 'Rifle' && $item->productCategory === 'Pistols') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "secondary",
+                        'points' => 3000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'weapons')
+                    ]);
+                    
+    
+                } else if($item->type === 'Melee' && $item->productCategory === 'Melee') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "melee",
+                        'points' => 3000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'weapons')
+                    ]);
+                    
+    
+                } else if($item->type === 'Arch-Gun' && $item->productCategory === 'SpaceGuns') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "archgun",
+                        'points' => 3000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'archguns')
+                    ]);
+                    
+    
+                } else if($item->type === 'Sentinel' && $item->productCategory === 'Sentinels') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "companion",
+                        'points' => 6000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'companions')
+                    ]);
+                    
+    
+                } else if($item->type === 'Companion Weapon' && $item->productCategory === 'SentinelWeapons') {
+                    Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
+                        'name' => $item->name,
+                        'type' => "companion",
+                        'points' => 6000,
+                        'url' => $this->processImage($this->getItemKey($item->name), 'companions')
+                    ]);
+                    
+                }
             }
-            if($json->tag === 'Warframe' && $json->category === 'Suits') {
-                $key = $this->getItemKey($json->name);
-                $type = ($key == 'voidrig' || $key == 'bonewidow') ? 'vehicle' : 'warframe';
-                Item::updateOrCreate(['key' => $key], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => $type,
-                    'points' => 6000,
-                    'url' => $this->processImage($key, $json->texture, 'warframes')
-                ]);
-            } else if($json->tag === 'Warframe' && $json->category === 'SpaceSuits') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "vehicle",
-                    'points' => 6000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'vehicles')
-                ]);
-            } else if($json->tag === 'Weapon' && $json->category === 'LongGuns') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "primary",
-                    'points' => 3000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'weapons')
-                ]);
-            } else if($json->tag === 'Weapon' && $json->category === 'Pistols') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "secondary",
-                    'points' => 3000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'weapons')
-                ]);
-            } else if($json->tag === 'Weapon' && $json->category === 'Melee') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "melee",
-                    'points' => 3000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'weapons')
-                ]);
-            } else if($json->tag === 'Weapon' && $json->category === 'SpaceSuits') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "archgun",
-                    'points' => 3000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'archguns')
-                ]);
-            } else if($json->tag === 'Sentinel' && $json->category === 'Sentinels') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "companion",
-                    'points' => 6000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'companions')
-                ]);
-            } else if($json->tag === 'Weapon' && $json->category === 'Sentinels') {
-                Item::updateOrCreate(['key' => $this->getItemKey($json->name)], [
-                    'name' => $this->getItemName($json->name),
-                    'type' => "companion",
-                    'points' => 6000,
-                    'url' => $this->processImage($this->getItemKey($json->name), $json->texture, 'companions')
-                ]);
-            }
+            
+            $this->info('Item ' . $item->name . ' processed.');
 
-            $this->info('Item #' . $i . ' processed.');
         }
 
         return 0;
@@ -134,15 +158,27 @@ class ItemScraper extends Command
         return $title;
     }
 
+    private function getItemWikiUrl($name)
+    {
+        $name = str_replace('_', ' ', $name);
+        $name = ucwords($name);
+        $name = str_replace(' ', '', $name);
+        $hash = md5($name . ".png");
+        
+        return "https://static.wikia.nocookie.net/warframe/images/" . substr($hash , 0, 1) . "/" . substr($hash , 0, 2) . "/" . $name . ".png";
+    }
+    // https://static.wikia.nocookie.net/warframe/images/1/1a/Akaten.png/revision/latest?cb=20210719052622
     // https://media.overframe.gg/512x/Lotus/Interface/Icons/Store/RegorAxeShield.png.webp
+    // https://static.wikia.nocookie.net/warframe/images/3/34/VaubanPrime.png/revision/latest?cb=20221110213420
 
-    private function processImage($key, $imageURL, $type) {
+    private function processImage($key, $type) {
 
         $path = "images/" . $type . "/" . $key . ".webp";
-        $url = 'https://media.overframe.gg/512x' . $imageURL . '.webp';
-
+        $url = $this->getItemWikiUrl($key);
+        
         $resolution = getimagesize($url);
-        $src = imagecreatefromwebp($url);
+        $src = imagecreatefrompng($url);
+
         $dest = imagecreatetruecolor(512, 341);
 
         imagecopyresized($dest, $src, 0, 0, 0, 0, 512, 341, $resolution[0], $resolution[1]);
@@ -151,4 +187,5 @@ class ItemScraper extends Command
 
         return $path;
     }
+
 }
