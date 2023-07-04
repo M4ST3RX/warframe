@@ -51,7 +51,7 @@ class ItemScraper extends Command
         $json = json_decode($body);
 
         foreach($json as $item) {
-            if ($item->category === "Warframes" || $item->category === "Primary" || $item->category === "Secondary" || $item->category === "Melee" || $item->category === "Sentinels" || $item->category === "Arch-Gun" ){
+            if ($item->category === "Warframes" || $item->category === "Primary" || $item->category === "Secondary" || $item->category === "Melee" || $item->category === "Sentinels" || $item->category === "Arch-Gun" || $item->category === "Archwing"){
                 $this->warn('Item ' . $item->name . ' processing...');
                 if($item->type === 'Warframe' && $item->productCategory === 'Suits') {
                     $key = $this->getItemKey($item->name);
@@ -62,7 +62,7 @@ class ItemScraper extends Command
                         'url' => $this->processImage($item->name, 'warframes')
                     ]);
 
-                } else if($item->type === 'Warframe' && $item->productCategory === 'SpaceSuits') {
+                } else if($item->type === 'Archwing' && $item->productCategory === 'SpaceSuits') {
                     Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
                         'name' => $item->name,
                         'type' => "vehicle",
