@@ -89,7 +89,7 @@ class ItemScraper extends Command
                     ]);
 
 
-                } else if($item->type === 'Rifle' && $item->productCategory === 'Pistols') {
+                } else if($item->type === 'Rifle' && $item->productCategory === 'Pistols' || $item->type === 'Pistol' && $item->productCategory === 'Pistols' || $item->type === 'Dual Pistols' && $item->productCategory === 'Pistols') {
                     Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
                         'name' => $item->name,
                         'type' => "secondary",
