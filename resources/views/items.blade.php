@@ -15,6 +15,7 @@
                 <tab name="Vehicle" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
                 <tab name="Archgun" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
                 <tab name="Companion" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
+                <tab name="Companion Weapon" v-bind:is-logged-in="{{ Auth::check() ? 1 : 0 }}"></tab>
             </tabs>
         </div>
     </div>

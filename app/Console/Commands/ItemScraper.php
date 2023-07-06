@@ -107,7 +107,7 @@ class ItemScraper extends Command
                     ]);
 
 
-                } else if($item->type === 'Arch-Gun' && $item->productCategory === 'SpaceGuns') {
+                } else if($item->type === 'Arch-Gun' && $item->productCategory === 'SpaceGuns' || $item->type === 'Archwing' && $item->productCategory === 'SpaceGuns') {
                     Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
                         'name' => $item->name,
                         'type' => "archgun",
@@ -128,7 +128,7 @@ class ItemScraper extends Command
                 } else if($item->type === 'Companion Weapon' && $item->productCategory === 'SentinelWeapons') {
                     Item::updateOrCreate(['key' => $this->getItemKey($item->name)], [
                         'name' => $item->name,
-                        'type' => "companion",
+                        'type' => "companion_weapon",
                         'points' => 6000,
                         'url' => $this->processImage($item->name, 'companions')
                     ]);

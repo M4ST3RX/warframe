@@ -10,7 +10,7 @@ class ItemController extends Controller
 {
     public function index()
     {
-        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing', 'companion'];
+        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing', 'companion', 'companion_weapon'];
         $items = Item::whereIn('type', $types)->orderBy('name')->get();
 
         $items = $items->groupBy(function($item) {
@@ -31,7 +31,7 @@ class ItemController extends Controller
 
     public function viewOthers($username)
     {
-        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing', 'companion'];
+        $types = ['warframe', 'primary', 'secondary', 'melee', 'archwing', 'companion', 'companion_weapon'];
         $items = Item::whereIn('type', $types)->orderBy('name')->get();
 
         $items = $items->groupBy(function($item) {

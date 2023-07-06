@@ -69,7 +69,7 @@
         },
         methods: {
             async getItems() {
-                const { data } = await axios.get('/api/items?types=' + this.type.toLowerCase() + '&mastery=true&crafting=true');
+                const { data } = await axios.get('/api/items?types=' + this.type.toLowerCase().replace(" ", "_") + '&mastery=true&crafting=true');
                 this.items = _.orderBy(data, 'name');
             },
             filterItemsWithForma(item, index) {
